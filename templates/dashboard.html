@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CineSuggest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container wide-container">
+    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.4));">🎬</span>
+            <h1 style="margin-bottom: 0; font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -0.5px;">Cine<span style="background: linear-gradient(135deg, #ff7b7b 0%, var(--primary-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Suggest</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="/genres" class="btn-secondary">🎭 Genres</a>
+            <a href="/profile" class="btn-secondary">👤 My Profile</a>
+            <a href="/favorites" class="btn-secondary">⭐ Favorites</a>
+            <a href="/logout" style="color: var(--text-muted); font-size: 0.9rem; align-self: center; margin-left: 10px;">Logout</a>
+        </div>
+    </header>
+
+    <div style="margin: 40px 0;">
+        <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 10px;">Find Your Next Adventure</h2>
+        <p style="color: var(--text-muted); font-size: 1rem; max-width: 550px; margin: 0 auto 30px;">
+            Enter a movie you love, and our advanced AI engine will analyze thousands of titles to find similar cinematic masterpieces for you.
+        </p>
+
+        <form action="/recommend" method="POST" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: row; gap: 10px; align-items: center;">
+            <div style="flex-grow: 1; position: relative;">
+                <input type="text" name="movie" placeholder="Enter movie name (e.g., Inception, The Matrix, Toy Story...)" required style="padding-left: 20px;">
+            </div>
+            <button type="submit" style="width: auto; padding: 14px 28px; white-space: nowrap;">Search</button>
+        </form>
+
+        <div style="margin-top: 25px; font-size: 0.95rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span>Popular Searches: </span>
+            <span class="popular-badge" onclick="fillSearch('Avatar')">A</span>
+            <span class="popular-badge" onclick="fillSearch('The Dark Knight')">TDK</span>
+            <span class="popular-badge" onclick="fillSearch('Interstellar')">I</span>
+            <span class="popular-badge" onclick="fillSearch('Titanic')">T</span>
+        </div>
+    </div>
+
+    <!-- Suggested Picks Section -->
+    <div style="margin-top: 60px; border-top: 1px solid var(--card-border); padding-top: 40px; text-align: left;">
+        <h3 style="font-size: 1.6rem; font-weight: 600; margin-bottom: 10px; color: #fff;">Picks For You</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">Discover random recommended films from our database. Catalog them directly below:</p>
+        
+        <ul class="movie-grid">
+            {% for movie in suggested_movies %}
+            <li class="movie-card" style="min-height: 480px;">
+                <div>
+                    <div class="card-poster-wrapper" style="height: 260px;">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                    </div>
+                    <div class="movie-card-info">
+                        <div class="meta-badges" style="margin-bottom: 5px;">
+                            <span class="badge badge-rating">⭐ {{ movie.rating }}</span>
+                        </div>
+                        <h4 class="movie-title" title="{{ movie.title }}" style="color: #fff; font-weight: 600; font-size: 1.05rem;">{{ movie.title }}</h4>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500; display: block; margin-top: 4px;">{{ movie.genres }}</span>
+                        <p class="movie-desc" style="margin-top: 5px; font-size: 0.8rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;" title="{{ movie.overview }}">{{ movie.overview }}</p>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    <a href="/favorite/{{ movie.title }}" class="favorite-btn-link">
+                        <button type="button" class="favorite-btn" style="padding: 6px 12px; font-size: 0.8rem;">⭐ Add Favorite</button>
+                    </a>
+                    <div class="movie-catalog-actions">
+                        <a href="/update_list/watchlist/{{ movie.title }}" class="catalog-btn btn-watchlist" title="Add to Watchlist">🍿 Watch</a>
+                        <a href="/update_list/best/{{ movie.title }}" class="catalog-btn btn-best" title="Mark as Best">🏆 Best</a>
+                        <a href="/update_list/dropped/{{ movie.title }}" class="catalog-btn btn-dropped" title="Mark as Dropped">❌ Drop</a>
+                        <a href="/update_list/worst/{{ movie.title }}" class="catalog-btn btn-worst" title="Mark as Worst">💩 Worst</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer style="margin-top: 40px; border-top: 1px solid var(--card-border); padding-top: 20px;">
+        <p class="footer-text">Powered by TMDB Dataset & TF-IDF Cosine Similarity Engine</p>
+    </footer>
+</div>
+
+<script>
+    function fillSearch(movieName) {
+        document.querySelector('input[name="movie"]').value = movieName;
+    }
+</script>
+</body>
+</html>

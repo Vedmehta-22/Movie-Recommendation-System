@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites | CineSuggest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container wide-container">
+    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.4));">🎬</span>
+            <h1 style="margin-bottom: 0; font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -0.5px;">Cine<span style="background: linear-gradient(135deg, #ff7b7b 0%, var(--primary-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Suggest</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="/genres" class="btn-secondary">🎭 Genres</a>
+            <a href="/profile" class="btn-secondary">👤 My Profile</a>
+            <a href="/dashboard" class="btn-secondary">🔍 Search</a>
+        </div>
+    </header>
+
+    <h2 style="font-size: 1.8rem; margin-bottom: 10px; font-weight: 600;">Your Bookmarked Titles</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">A collection of films you have saved for later.</p>
+
+    {% if favorites %}
+    <ul class="movie-grid">
+        {% for fav in favorites %}
+        <li class="movie-card">
+            <div>
+                <div class="card-poster-wrapper">
+                    <img src="{{ fav.poster }}" alt="{{ fav.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                </div>
+                <div class="movie-card-info">
+                    <div class="meta-badges" style="margin-bottom: 5px;">
+                        <span class="badge badge-rating">⭐ {{ fav.rating }}</span>
+                    </div>
+                    <h4 class="movie-title" title="{{ fav.title }}">{{ fav.title }}</h4>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500; display: block; margin-top: 4px;">{{ fav.genres }}</span>
+                </div>
+            </div>
+            <a href="/remove_favorite/{{ fav.title }}" class="profile-card-btn">❌ Remove Favorite</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div style="padding: 40px 20px; text-align: center; background: rgba(0, 0, 0, 0.02); border: 1px dashed var(--card-border); border-radius: 12px; margin: 30px 0;">
+        <div style="font-size: 2.5rem; margin-bottom: 15px;">🍿</div>
+        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;">No movies bookmarked yet!</p>
+        <a href="/dashboard" class="btn-secondary" style="padding: 10px 20px; border-color: var(--primary-color); color: var(--primary-color);">Discover Movies</a>
+    </div>
+    {% endif %}
+
+    <div style="margin-top: 30px;">
+        <a href="/dashboard" class="btn-secondary" style="padding: 12px 24px; font-weight: 500;">← Back to Dashboard</a>
+    </div>
+
+    <footer style="margin-top: 40px; border-top: 1px solid var(--card-border); padding-top: 20px;">
+        <p class="footer-text">Favorites are synced to your database profile</p>
+    </footer>
+</div>
+
+</body>
+</html>

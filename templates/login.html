@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | CineSuggest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div style="font-size: 3rem; margin-bottom: 10px;">🎬</div>
+    <h2>CineSuggest</h2>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -15px; margin-bottom: 25px;">Sign in to your cinematic experience</p>
+
+    {% if error %}
+    <div class="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="enter your email" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" style="margin-top: 10px;">Login</button>
+    </form>
+
+    <div style="margin-top: 25px;">
+        <span style="color: var(--text-muted); font-size: 0.9rem;">New to CineSuggest?</span>
+        <a href="/signup" style="margin-top: 0; margin-left: 5px; font-weight: 600; color: var(--primary-color);">Create Account</a>
+    </div>
+</div>
+
+</body>
+</html>

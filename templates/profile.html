@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CineSuggest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container wide-container">
+    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.4));">🎬</span>
+            <h1 style="margin-bottom: 0; font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -0.5px;">Cine<span style="background: linear-gradient(135deg, #ff7b7b 0%, var(--primary-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Suggest</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="/genres" class="btn-secondary">🎭 Genres</a>
+            <a href="/favorites" class="btn-secondary">⭐ Favorites</a>
+            <a href="/dashboard" class="btn-secondary">🔍 Search</a>
+        </div>
+    </header>
+
+    <div class="profile-header">
+        <div class="profile-avatar">{{ username[0] | upper if username else 'G' }}</div>
+        <div class="profile-info">
+            <h3>{{ username }}</h3>
+            <p>{{ email }}</p>
+        </div>
+    </div>
+
+    <div class="profile-sections">
+        <!-- Watchlist Section -->
+        <div class="profile-section">
+            <h3 class="profile-section-title">🍿 Watchlist (To Watch)</h3>
+            {% if watchlist %}
+            <ul class="mini-movie-grid">
+                {% for movie in watchlist %}
+                <li class="movie-card" style="min-height: 380px;">
+                    <div>
+                        <div class="card-poster-wrapper" style="height: 180px;">
+                            <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                        </div>
+                        <div class="movie-card-info" style="margin-bottom: 5px;">
+                            <span class="badge badge-rating" style="margin-bottom: 5px;">⭐ {{ movie.rating }}</span>
+                            <h4 class="movie-title" style="font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ movie.title }}">{{ movie.title }}</h4>
+                        </div>
+                    </div>
+                    <a href="/remove_from_list/{{ movie.title }}" class="profile-card-btn">❌ Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.95rem; padding-left: 5px;">No movies added to watchlist yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Best Movies Section -->
+        <div class="profile-section">
+            <h3 class="profile-section-title">🏆 Best Movies</h3>
+            {% if best %}
+            <ul class="mini-movie-grid">
+                {% for movie in best %}
+                <li class="movie-card" style="min-height: 380px;">
+                    <div>
+                        <div class="card-poster-wrapper" style="height: 180px;">
+                            <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                        </div>
+                        <div class="movie-card-info" style="margin-bottom: 5px;">
+                            <span class="badge badge-rating" style="margin-bottom: 5px;">⭐ {{ movie.rating }}</span>
+                            <h4 class="movie-title" style="font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ movie.title }}">{{ movie.title }}</h4>
+                        </div>
+                    </div>
+                    <a href="/remove_from_list/{{ movie.title }}" class="profile-card-btn">❌ Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.95rem; padding-left: 5px;">No movies marked as best yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Dropped Movies Section -->
+        <div class="profile-section">
+            <h3 class="profile-section-title">❌ Dropped Movies</h3>
+            {% if dropped %}
+            <ul class="mini-movie-grid">
+                {% for movie in dropped %}
+                <li class="movie-card" style="min-height: 380px;">
+                    <div>
+                        <div class="card-poster-wrapper" style="height: 180px;">
+                            <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                        </div>
+                        <div class="movie-card-info" style="margin-bottom: 5px;">
+                            <span class="badge badge-rating" style="margin-bottom: 5px;">⭐ {{ movie.rating }}</span>
+                            <h4 class="movie-title" style="font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ movie.title }}">{{ movie.title }}</h4>
+                        </div>
+                    </div>
+                    <a href="/remove_from_list/{{ movie.title }}" class="profile-card-btn">❌ Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.95rem; padding-left: 5px;">No movies dropped yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Worst Movies Section -->
+        <div class="profile-section">
+            <h3 class="profile-section-title">💩 Worst Movies</h3>
+            {% if worst %}
+            <ul class="mini-movie-grid">
+                {% for movie in worst %}
+                <li class="movie-card" style="min-height: 380px;">
+                    <div>
+                        <div class="card-poster-wrapper" style="height: 180px;">
+                            <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster" class="card-poster" onerror="this.src='https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=500&auto=format&fit=crop'" loading="lazy">
+                        </div>
+                        <div class="movie-card-info" style="margin-bottom: 5px;">
+                            <span class="badge badge-rating" style="margin-bottom: 5px;">⭐ {{ movie.rating }}</span>
+                            <h4 class="movie-title" style="font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ movie.title }}">{{ movie.title }}</h4>
+                        </div>
+                    </div>
+                    <a href="/remove_from_list/{{ movie.title }}" class="profile-card-btn">❌ Remove</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="color: var(--text-muted); font-size: 0.95rem; padding-left: 5px;">No movies marked as worst yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; justify-content: center;">
+        <a href="/dashboard" class="btn-secondary" style="padding: 12px 24px; font-weight: 500;">← Back to Dashboard</a>
+    </div>
+
+    <footer style="margin-top: 40px; border-top: 1px solid var(--card-border); padding-top: 20px;">
+        <p class="footer-text">Keep cataloging films to customize your collections</p>
+    </footer>
+</div>
+
+</body>
+</html>

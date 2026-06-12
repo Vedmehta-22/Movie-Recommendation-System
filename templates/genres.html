@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Genres | CineSuggest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container wide-container">
+    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.4));">🎬</span>
+            <h1 style="margin-bottom: 0; font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -0.5px;">Cine<span style="background: linear-gradient(135deg, #ff7b7b 0%, var(--primary-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Suggest</span></h1>
+        </div>
+        <div class="nav-links">
+            <a href="/profile" class="btn-secondary">👤 My Profile</a>
+            <a href="/favorites" class="btn-secondary">⭐ Favorites</a>
+            <a href="/dashboard" class="btn-secondary">🔍 Search</a>
+        </div>
+    </header>
+
+    <h2 style="font-size: 1.8rem; margin-bottom: 10px; font-weight: 600;">Choose a Genre</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">Select a category to browse top-rated movies in that genre:</p>
+
+    <div class="genre-grid">
+        <a href="/genres/Action" class="genre-card">
+            <span class="genre-icon">💥</span>
+            <span class="genre-name">Action</span>
+        </a>
+        <a href="/genres/Adventure" class="genre-card">
+            <span class="genre-icon">🧭</span>
+            <span class="genre-name">Adventure</span>
+        </a>
+        <a href="/genres/Animation" class="genre-card">
+            <span class="genre-icon">🎨</span>
+            <span class="genre-name">Animation</span>
+        </a>
+        <a href="/genres/Comedy" class="genre-card">
+            <span class="genre-icon">😂</span>
+            <span class="genre-name">Comedy</span>
+        </a>
+        <a href="/genres/Drama" class="genre-card">
+            <span class="genre-icon">🎭</span>
+            <span class="genre-name">Drama</span>
+        </a>
+        <a href="/genres/Fantasy" class="genre-card">
+            <span class="genre-icon">🦄</span>
+            <span class="genre-name">Fantasy</span>
+        </a>
+        <a href="/genres/Horror" class="genre-card">
+            <span class="genre-icon">👻</span>
+            <span class="genre-name">Horror</span>
+        </a>
+        <a href="/genres/Mystery" class="genre-card">
+            <span class="genre-icon">🕵️</span>
+            <span class="genre-name">Mystery</span>
+        </a>
+        <a href="/genres/Romance" class="genre-card">
+            <span class="genre-icon">💖</span>
+            <span class="genre-name">Romance</span>
+        </a>
+        <a href="/genres/Science Fiction" class="genre-card">
+            <span class="genre-icon">🚀</span>
+            <span class="genre-name">Sci-Fi</span>
+        </a>
+        <a href="/genres/Thriller" class="genre-card">
+            <span class="genre-icon">😱</span>
+            <span class="genre-name">Thriller</span>
+        </a>
+        <a href="/genres/Family" class="genre-card">
+            <span class="genre-icon">👨‍👩‍👧‍👦</span>
+            <span class="genre-name">Family</span>
+        </a>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <a href="/dashboard" class="btn-secondary" style="padding: 12px 24px; font-weight: 500;">← Back to Dashboard</a>
+    </div>
+
+    <footer style="margin-top: 40px; border-top: 1px solid var(--card-border); padding-top: 20px;">
+        <p class="footer-text">Powered by TMDB Dataset Genre Classifications</p>
+    </footer>
+</div>
+
+</body>
+</html>
