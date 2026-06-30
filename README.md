@@ -169,11 +169,3 @@ The dataset contains:
 ## Author
 
 Ved Mehta
-
-Indus University
-
-Computer Engineering
-
-Semester Project
-
-2026
